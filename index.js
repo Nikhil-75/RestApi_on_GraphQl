@@ -2,10 +2,11 @@ const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
 const { PORT } = require("./config");
-const cors = require("cors");
 const userMutations = require('./graphql/mutations/userMutation');
+const addressMutations = require('./graphql/mutations/addressMutations');
 const userQuery = require('./graphql/queries/userQuery');
 const {GraphQLObjectType, GraphQLSchema} = require('graphql');
+const cors = require("cors");
 require("./db");
 
 
@@ -21,7 +22,8 @@ const Query = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: () => ({
-      ...userMutations
+      ...userMutations,
+      ...addressMutations
   })
 })
 
