@@ -1,8 +1,8 @@
 {
-  "name": "restapi_graphql",
+  "name": "gpl",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./index.js"
@@ -10,10 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
     "graphql": "^15.8.0",
+    "lodash.merge": "^4.6.2",
     "nodemon": "^2.0.22",
     "pg": "^8.10.0",
     "sequelize": "^6.30.0"
