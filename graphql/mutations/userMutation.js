@@ -1,5 +1,5 @@
 const { UserType } = require("../types/userType");
-const Users = require("../../models/userModel");
+const User = require("../../models/userModel");
 const { GraphQLString, GraphQLInt } = require("graphql");
 const bcrypt = require("bcrypt");
 
@@ -16,10 +16,10 @@ const registerUser = {
 
   resolve: async (parent, args) => {
     const { email, firstName, lastName, username, password } = args;
-    const data = await Users.findOne({ where: { email } });
+    const data = await User.findOne({ where: { email } });
     if (data) throw new Error("email already exists");
 
-    const userName = await Users.findOne({ where: { username } });
+    const userName = await User.findOne({ where: { username } });
     if (userName) throw new Error("username already exists");
 
     const emailExpression =
@@ -31,8 +31,9 @@ const registerUser = {
       throw new Error("password should be minimum 5 characters");
     args.password = bcrypt.hashSync(args.password, 10);
 
-    const user = await Users.create(args);
-    return user;
+    const result = await User.create(args);
+    console.log(result);
+    return result;
   },
 };
 
@@ -47,7 +48,20 @@ const updateUser = {
     const { username, email, id } = args;
     const result = await Users.update({ username, email }, { where: { id } });
     if (!result[0]) throw new Error("user not found with id");
-    return await Users.findByPk(id);
+    return await User.findByPk(id);
+  },
+};
+
+const forgetPassword = {
+  type: UserType,
+  args: {
+    id: {type: GraphQLInt},
+    email: { type: GraphQLString },
+  },
+  resolve: async (parent, args) => {
+    const { email, id } = args;
+    const result = await User.findOne({ where: { email } });
+    return result;
   },
 };
 
@@ -66,8 +80,8 @@ const deleteUser = {
     }
     throw new Error("user deleted success with id");
 
-    return await Users.findByPk(id);
+    return await User.findByPk(id);
   },
 };
 
-module.exports = { registerUser, updateUser, deleteUser };
+module.exports = { registerUser, updateUser,forgetPassword, deleteUser };

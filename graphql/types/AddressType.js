@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLInt, GraphQLString } = require("graphql");
-const { User } = require("../../models");
+//const { User } = require("../../models");
 
 const AddressType = new GraphQLObjectType({
   name: "Address",

@@ -5,8 +5,11 @@ const { PORT } = require("./config");
 const userMutations = require('./graphql/mutations/userMutation');
 const addressMutations = require('./graphql/mutations/addressMutations');
 const userQuery = require('./graphql/queries/userQuery');
+
+
 const {GraphQLObjectType, GraphQLSchema} = require('graphql');
 const cors = require("cors");
+const { Userschema } = require("./graphql/userSchema");
 require("./db");
 
 
@@ -15,6 +18,7 @@ const Query = new GraphQLObjectType({
   name: 'Query',
   fields: {
       ...userQuery
+      
   }
 })
 
@@ -49,6 +53,7 @@ app.use(
       query: Query,
         mutation: Mutation
     })
+
 })
 );
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
