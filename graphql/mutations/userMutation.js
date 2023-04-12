@@ -1,7 +1,11 @@
 const { UserType } = require("../types/userType");
 const User = require("../../models/userModel");
+const otp = require('../../models/otpModel')
 const { GraphQLString, GraphQLInt } = require("graphql");
 const bcrypt = require("bcrypt");
+
+const GraphQLUUID = require('graphql-type-uuid') ;
+const { v4: uuidv4 } = require("uuid");
 
 const registerUser = {
   type: UserType,
@@ -30,7 +34,6 @@ const registerUser = {
     if (password.length < 5)
       throw new Error("password should be minimum 5 characters");
     args.password = bcrypt.hashSync(args.password, 10);
-
     const result = await User.create(args);
     console.log(result);
     return result;
@@ -46,7 +49,7 @@ const updateUser = {
   },
   resolve: async (parent, args) => {
     const { username, email, id } = args;
-    const result = await Users.update({ username, email }, { where: { id } });
+    const result = await User.update({ username, email }, { where: { id } });
     if (!result[0]) throw new Error("user not found with id");
     return await User.findByPk(id);
   },
@@ -55,13 +58,16 @@ const updateUser = {
 const forgetPassword = {
   type: UserType,
   args: {
-    id: {type: GraphQLInt},
+    
     email: { type: GraphQLString },
   },
   resolve: async (parent, args) => {
-    const { email, id } = args;
-    const result = await User.findOne({ where: { email } });
-    return result;
+    const { email } = args;
+   
+    const user = await User.findOne({ where: { email } });
+    console.log(user)
+    if (!user) throw new Error("email is not correct");
+    //console.log(user)
   },
 };
 
@@ -72,7 +78,7 @@ const deleteUser = {
   },
   resolve: async (parent, args) => {
     const { id } = args;
-    const result = await Users.destroy({
+    const result = await User.destroy({
       where: { id: id },
     });
     if (!result) {
@@ -84,4 +90,4 @@ const deleteUser = {
   },
 };
 
-module.exports = { registerUser, updateUser,forgetPassword, deleteUser };
+module.exports = { registerUser, updateUser, forgetPassword, deleteUser };

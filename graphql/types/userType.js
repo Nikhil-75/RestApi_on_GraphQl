@@ -16,18 +16,4 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
-const LoginType = new GraphQLObjectType({
-  name: "User",
-  fields: () => ({
-    id: { type: GraphQLInt },
-    email: { type: GraphQLString },
-    password: { type: GraphQLString },
-    createdAt: { type: GraphQLString },
-    updatedAt: { type: GraphQLString },
-  }),
-});
-
-
-
-
 module.exports = { UserType };
