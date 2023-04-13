@@ -1,10 +1,10 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../db");
 
-const tableName = "Otp";
+const tableName = "File";
 
-const Otp = sequelize.define(
-  "Otp",
+const File = sequelize.define(
+  "File",
   {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
 
@@ -12,8 +12,14 @@ const Otp = sequelize.define(
 
     email: { type: Sequelize.STRING, allowNull: false },
   },
-  { timestamps: true },
+  {
+     timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'upload_at'
+     }
+    
+},
   { tableName }
 );
 
-module.exports =  Otp ;
+module.exports =  File ;

@@ -18,9 +18,13 @@
     "express-graphql": "^0.12.0",
     "graphql": "^15.8.0",
     "graphql-type-uuid": "^0.2.0",
+    "graphql-upload": "^16.0.2",
     "jsonwebtoken": "^9.0.0",
     "lodash.merge": "^4.6.2",
+    "mime-types": "^2.1.35",
     "nodemon": "^2.0.22",
+    "otp-generator": "^4.0.1",
+    "path": "^0.12.7",
     "pg": "^8.10.0",
     "sequelize": "^6.30.0",
     "uuid": "^9.0.0"
