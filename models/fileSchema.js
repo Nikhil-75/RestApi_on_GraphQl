@@ -1,25 +1,21 @@
-const Sequelize = require("sequelize");
-const sequelize = require("../db");
+// const Sequelize = require("sequelize");
+// const sequelize = require("../db");
 
-const tableName = "File";
+// const tableName = "Image";
 
-const File = sequelize.define(
-  "File",
-  {
-    id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
+// const Image = sequelize.define(
+//   "Image",
+//   {
+//     filename: { type: Sequelize.STRING },
 
-    otp: { type: Sequelize.STRING, allowNull: false },
+//     mimetype: { type: Sequelize.STRING },
 
-    email: { type: Sequelize.STRING, allowNull: false },
-  },
-  {
-     timestamps: {
-        createdAt: 'created_at',
-        updatedAt: 'upload_at'
-     }
-    
-},
-  { tableName }
-);
+//     path: { type: Sequelize.STRING },
+//   },
+//   {
+//     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
+//   },
+//   { tableName }
+// );
 
-module.exports =  File ;
+// module.exports = Image;

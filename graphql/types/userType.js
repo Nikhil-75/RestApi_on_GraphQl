@@ -17,4 +17,17 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
-module.exports = { UserType };
+const UserLoginType = new GraphQLObjectType({
+  name: "UserLogin",
+  fields: () => ({
+    access_token: { type: GraphQLString },
+  })
+})
+
+const ForgetType = new GraphQLObjectType({
+  name: "UserForget",
+  fields: () => ({
+  otp: {type: GraphQLString},
+  })
+})
+module.exports = { UserType, UserLoginType, ForgetType };

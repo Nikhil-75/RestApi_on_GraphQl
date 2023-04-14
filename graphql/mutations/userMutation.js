@@ -1,11 +1,11 @@
-const { UserType } = require("../types/userType");
+const { UserType, ForgetType } = require("../types/userType");
 const User = require("../../models/userModel");
 const Otp = require("../../models/otpModel");
 const { GraphQLString, GraphQLInt } = require("graphql");
 const bcrypt = require("bcrypt");
 const GraphQLUUID = require("graphql-type-uuid");
 const { v4: uuidv4 } = require("uuid");
-
+const { otpEmail } = require("../../services/otpVerify");
 const { JWT_SECRET } = require("../../config");
 const jwt = require("jsonwebtoken");
 const JwtService = require("../../services/jwtService");
@@ -78,7 +78,7 @@ const updateUser = {
 };*/
 
 const ForgetPassword = {
-  type: UserType,
+  type: ForgetType,
   args: {
     email: { type: GraphQLString },
   },
@@ -86,13 +86,15 @@ const ForgetPassword = {
     const { email } = args;
     const user = await User.findOne({ where: { email } });
     if (!user) throw new Error("invalid email");
-
-    await PasswordReset.deleteMany({ email });
+    console.log(user);
+    await Otp.destroy({ where: { email }, truncate: true });
     const otp = uuidv4().slice(0, 4);
     console.log(otp);
     const pr = new Otp({ email, otp });
     await pr.save();
-    return user;
+    otpEmail(otp, email);
+    console.log(otp);
+    return { otp: otp };
   },
 };
 
@@ -111,15 +113,21 @@ const codeVerify = {
     if (!user) throw new Error("invalid email");
     const userExist = await Otp.findOne({ email });
     console.log(userExist.otp, otp);
-    if (otp !== userExist.otp) throw new Error("invalid user");
+    if (otp !== userExist.otp) throw new Error("invalid otp");
     if (password !== confirm_password)
       throw new Error("password and confirm password does not match");
     const hashPassword = await bcrypt.hash(password, 10);
     await User.update({ password: hashPassword }, { where: { email } });
+
+    const token = jwt.sign({ user_id: email }, JWT_SECRET, {
+      expiresIn: "2h",
+    });
+    return { access_token: token };
+
     //await updatePassword.save();
     //await PasswordReset.deleteMany({ email });
 
-    return user;
+    //return user;
   },
 };
 
