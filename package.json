@@ -1,8 +1,8 @@
 {
-  "name": "restapi_graphql",
+  "name": "gpl",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./index.js"
@@ -10,12 +10,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
+    "fs": "^0.0.1-security",
     "graphql": "^15.8.0",
+    "graphql-type-uuid": "^0.2.0",
+    "graphql-upload": "^16.0.2",
+    "jsonwebtoken": "^9.0.0",
+    "lodash.merge": "^4.6.2",
+    "mime-types": "^2.1.35",
+    "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
+    "otp-generator": "^4.0.1",
+    "path": "^0.12.7",
     "pg": "^8.10.0",
-    "sequelize": "^6.30.0"
+    "sequelize": "^6.30.0",
+    "uuid": "^9.0.0"
   }
 }
